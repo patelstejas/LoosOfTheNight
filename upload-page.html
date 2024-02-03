@@ -1,4 +1,3 @@
-<!-- upload-page.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -63,7 +62,7 @@
     </style>
 </head>
 <body>
-    <form action="/process-upload" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="/process-upload" method="post" enctype="multipart/form-data">
         <h1>Location and Image Upload</h1>
 
         <label for="location">Location:</label>
@@ -73,9 +72,39 @@
         <input type="file" id="image" name="image" accept="image/*" required>
 
         <label for="time">Time:</label>
-        <input type="text" id="time" name="time" required>
+        <input type="text" id="time" name="time" placeholder="Enter time in YYYY-MM-DD HH:MM:SS format" required>
 
         <button type="submit">Submit</button>
     </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to get user's location
+            function getLocation() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                        const latitude = position.coords.latitude;
+                        const longitude = position.coords.longitude;
+                        const locationInput = document.getElementById("location");
+                        locationInput.value = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                    });
+                } else {
+                    alert("Geolocation is not supported by this browser.");
+                }
+            }
+
+            // Call the getLocation function when the form is submitted
+            document.getElementById("uploadForm").addEventListener("submit", function(event) {
+                getLocation();
+            });
+
+            // Optionally, you can add another event listener for the time input
+            // to clear the time value when the user manually inputs it
+            document.getElementById("time").addEventListener("input", function(event) {
+                // Clear the time value when the user starts typing
+                this.value = "";
+            });
+        });
+    </script>
 </body>
 </html>
