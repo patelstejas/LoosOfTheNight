@@ -1,9 +1,10 @@
+<!-- upload-page.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Location and Image Upload</title>
+    <title>Image Upload</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -63,23 +64,28 @@
 </head>
 <body>
     <form id="uploadForm" action="/process-upload" method="post" enctype="multipart/form-data">
-        <h1>Location and Image Upload</h1>
-
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required>
+        <h1>Image Upload</h1>
 
         <label for="image">Upload Image:</label>
         <input type="file" id="image" name="image" accept="image/*" required>
 
+        <label for="location">Location:</label>
+        <input type="text" id="location" name="location" required disabled>
+
         <label for="time">Time:</label>
-        <input type="text" id="time" name="time" placeholder="Enter time in YYYY-MM-DD HH:MM:SS format" required>
+        <select id="time" name="time" required>
+            <option value="morning">Morning</option>
+            <option value="afternoon">Afternoon</option>
+            <option value="evening">Evening</option>
+            <option value="night">Night</option>
+        </select>
 
         <button type="submit">Submit</button>
     </form>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Function to get user's location
+            // Function to get user's location and fill the location input
             function getLocation() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(function(position) {
@@ -96,13 +102,6 @@
             // Call the getLocation function when the form is submitted
             document.getElementById("uploadForm").addEventListener("submit", function(event) {
                 getLocation();
-            });
-
-            // Optionally, you can add another event listener for the time input
-            // to clear the time value when the user manually inputs it
-            document.getElementById("time").addEventListener("input", function(event) {
-                // Clear the time value when the user starts typing
-                this.value = "";
             });
         });
     </script>
