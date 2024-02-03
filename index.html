@@ -1,0 +1,130 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEND - Save Your Space</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+        }
+
+        nav {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-items a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: bold;
+        }
+
+        .hero {
+            background-color: #fff;
+            padding: 50px 0;
+            text-align: center;
+            color: #333;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+        }
+
+        .column-left {
+            flex: 1;
+            text-align: left;
+        }
+
+        .column-left h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .column-left p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .column-left button {
+            background-color: #007bff;
+            color: white;
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .column-left button:hover {
+            background-color: #0056b3;
+        }
+
+        .column-right {
+            flex: 1;
+            text-align: right;
+        }
+
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">SEND</div>
+        <div class="nav-items">
+            <a href="/">Home</a>
+            <a href="/">About</a>
+            <a href="/">Contact</a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-container">
+            <div class="column-left">
+                <h1>Save Your Space from Light Pollution</h1>
+                <p>Light pollution is increasing each year, and something must be done to preserve the beauty of our night sky.</p>
+                <!-- Call the JavaScript function when the button is clicked -->
+                <button onclick="redirectToUploadPage()">Click button to upload</button>
+            </div>
+            <div class="column-right">
+                <img src="./image.jpg" alt="illustration" class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Include JavaScript to handle button click and redirection -->
+    <script>
+        function redirectToUploadPage() {
+            // Redirect to another page for location information and image upload
+            window.location.href = 'Users/patel/Downloads/upload-page.html';
+        }
+    </script>
+</body>
+</html>
