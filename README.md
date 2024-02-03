@@ -1,2 +1,2 @@
-# LoosOfTheNight
+# LossOfTheNight
 BellHacks Project
