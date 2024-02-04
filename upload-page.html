@@ -80,30 +80,54 @@
             <option value="night">Night</option>
         </select>
 
-        <button type="submit">Submit</button>
+        <button type="button" onclick="submitForm()">Submit</button>
     </form>
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
+        function submitForm() {
             // Function to get user's location and fill the location input
             function getLocation() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(function(position) {
-                        const latitude = position.coords.latitude;
-                        const longitude = position.coords.longitude;
-                        const locationInput = document.getElementById("location");
-                        locationInput.value = `Latitude: ${latitude}, Longitude: ${longitude}`;
-                    });
-                } else {
-                    alert("Geolocation is not supported by this browser.");
-                }
+                return new Promise((resolve, reject) => {
+                    if (navigator.geolocation) {
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            const latitude = position.coords.latitude;
+                            const longitude = position.coords.longitude;
+                            const locationInput = document.getElementById("location");
+                            locationInput.value = `Latitude: ${latitude}, Longitude: ${longitude}`;
+                            resolve();
+                        });
+                    } else {
+                        reject("Geolocation is not supported by this browser.");
+                    }
+                });
             }
 
-            // Call the getLocation function when the form is submitted
-            document.getElementById("uploadForm").addEventListener("submit", function(event) {
-                getLocation();
-            });
-        });
+            // Submit the form after getting the location
+            getLocation()
+                .then(() => {
+                    const form = document.getElementById("uploadForm");
+                    const formData = new FormData(form);
+
+                    // Make a POST request to the serverless function
+                    return fetch('https://your-vercel-app.vercel.app/api/process_image', {
+                        method: 'POST',
+                        body: formData,
+                    });
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Handle success if needed
+                        console.log('Image processing successful');
+                    } else {
+                        // Handle error if needed
+                        console.error('Image processing failed:', response.statusText);
+                    }
+                })
+                .catch(error => {
+                    // Handle error if needed
+                    console.error('An error occurred:', error);
+                });
+        }
     </script>
 </body>
 </html>
