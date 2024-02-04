@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>US Map with Points</title>
+    <style>
+        #mapCanvas {
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="mapCanvas" width="800" height="600"></canvas>
+
+<script>
+    async function fetchAndPlotPoints() {
+        try {
+            const response = await fetch('path/to/your/data.json');
+            const jsonData = await response.json();
+
+            const data = jsonData.data;
+            const points = [];
+
+            for (const entry of data) {
+                if (entry.time !== "null") {
+                    const darkness = calculateDarkness(entry.light, entry.time);
+
+                    points.push({
+                        lat: entry.position.latitude,
+                        lon: entry.position.longitude,
+                        darkness: darkness
+                    });
+                }
+            }
+
+            plotPoints(points);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    function calculateDarkness(light, time) {
+        // Adjust darkness based on time
+        const isEvening = time === "Evening";
+        const adjustmentFactor = isEvening ? 0.75 : 1; // Make values 25% lighter in the evening
+        return light * adjustmentFactor;
+    }
+
+    function plotPoints(points) {
+        const canvas = document.getElementById('mapCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Clear canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Loop through points and draw them on the canvas
+        for (const point of points) {
+            const x = (point.lon + 180) * (canvas.width / 360);
+            const y = canvas.height - (point.lat + 90) * (canvas.height / 180);
+            const darkness = Math.round(point.darkness * 255);
+
+            ctx.fillStyle = `rgb(${darkness}, ${darkness}, ${darkness})`;
+            ctx.beginPath();
+            ctx.arc(x, y, 5, 0, 2 * Math.PI);
+            ctx.fill();
+        }
+    }
+
+    // Call the function to fetch and plot points
+    fetchAndPlotPoints();
+</script>
+
+</body>
+</html>

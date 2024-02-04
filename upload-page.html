@@ -63,7 +63,8 @@
     </style>
 </head>
 <body>
-    <form id="uploadForm" action="/process-upload" method="post" enctype="multipart/form-data">
+    <form id="uploadForm" action="/writeToFile" method="post" enctype="multipart/form-data">
+
         <h1>Image Upload</h1>
 
         <label for="image">Upload Image:</label>
@@ -89,7 +90,7 @@
             function getLocation() {
                 return new Promise((resolve, reject) => {
                     if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(position) {
+                        navigator.geolocation.getCurrentPosition(function (position) {
                             const latitude = position.coords.latitude;
                             const longitude = position.coords.longitude;
                             const locationInput = document.getElementById("location");
@@ -101,27 +102,16 @@
                     }
                 });
             }
-
+    
             // Submit the form after getting the location
             getLocation()
                 .then(() => {
-                    const form = document.getElementById("uploadForm");
-                    const formData = new FormData(form);
-
-                    // Make a POST request to the serverless function
-                    return fetch('https://your-vercel-app.vercel.app/api/process_image', {
-                        method: 'POST',
-                        body: formData,
-                    });
+                    // Simulate processing delay (3 seconds)
+                    return new Promise(resolve => setTimeout(resolve, 3000));
                 })
-                .then(response => {
-                    if (response.ok) {
-                        // Handle success if needed
-                        console.log('Image processing successful');
-                    } else {
-                        // Handle error if needed
-                        console.error('Image processing failed:', response.statusText);
-                    }
+                .then(() => {
+                    // Redirect to mapDemoHtm.html after the delay
+                    window.location.href = 'mapDemoHtm.html';
                 })
                 .catch(error => {
                     // Handle error if needed
@@ -129,5 +119,6 @@
                 });
         }
     </script>
+    
 </body>
 </html>
